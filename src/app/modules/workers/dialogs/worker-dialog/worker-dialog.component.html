@@ -1,0 +1,55 @@
+<ol>
+    <div mat-dialog-content class="dialog-content">
+        <div class="header-dialog">
+            <h2 mat-dialog-title>{{isEdit ? 'Edit worker': 'Add new worker'}}</h2>
+            <button mat-icon-button class="close-button" (click)="closeDialog()">
+                <mat-icon>close</mat-icon> 
+            </button> 
+        </div>
+        <form [formGroup]="form">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput [formControl]="form.controls.name">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Surname</mat-label>
+                    <input matInput [formControl]="form.controls.surname">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select [formControl]="form.controls.companyId" placeholder="Company" #singleSelect>
+                        <mat-option *ngFor="let company of companies$ | async" [value]="company._id">
+                            {{company.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select [formControl]="form.controls.university" placeholder="University" #singleSelect>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="formFilter" 
+                                placeholderLabel="Find University..." 
+                                noEntriesFoundLabel="'No matching university found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <ng-container *ngIf="universities$ | async">
+                            <mat-option *ngFor="let university of universities | search: formFilter.value" [value]="university.name">
+                                {{university.name}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="buttons" mat-dialog-actions>
+                <button mat-raised-button (click)="closeDialog()">Close</button>
+                <button mat-raised-button color="primary" (click)="submitForm()">{{isEdit ? 'Edit': 'Add'}}</button>
+            </div>
+        </form>
+        
+  </div>
+</ol>

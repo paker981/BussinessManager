@@ -1,0 +1,35 @@
+<ol>
+    <div mat-dialog-content class="dialog-content">
+        <div class="header-dialog">
+            <h2 mat-dialog-title>You forget to fillup university</h2>
+            <button mat-icon-button class="close-button" (click)="closeDialog()">
+                <mat-icon>close</mat-icon> 
+            </button> 
+        </div>
+        <form>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select [formControl]="form" placeholder="University" #singleSelect>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="formFilter" 
+                                placeholderLabel="Find University..." 
+                                noEntriesFoundLabel="'No matching university found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <ng-container *ngIf="universities$ | async">
+                            <mat-option *ngFor="let university of universities | search: formFilter.value" [value]="university.name">
+                                {{university.name}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>              
+            
+        </form>
+        <div class="buttons" mat-dialog-actions>
+            <button mat-raised-button (click)="closeDialog()">Close</button>
+            <button mat-raised-button color="primary" (click)="submitForm()">Submit</button>
+        </div>
+        
+  </div>
+</ol>

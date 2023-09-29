@@ -1,0 +1,27 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #4a90e2, #7b5ac2);
+  }
+  
+  .login-card {
+    width: 340px;
+    padding: 20px;
+  }
+
+  .button-form{
+    margin-top: 10px;
+  }
+
+  span.link {
+    color: blue; /* Kolor tekstu, który jest typowy dla linków */
+    text-decoration: underline; /* Podkreślenie tekstu, które jest często używane w linkach */
+    cursor: pointer; /* Kursor w postaci dłoni, wskazujący, że element jest klikalny */
+  }
+ 
+  span.link:hover {
+    color: darkblue; 
+    text-decoration: none; 
+  }

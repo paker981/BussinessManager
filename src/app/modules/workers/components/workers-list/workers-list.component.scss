@@ -1,0 +1,31 @@
+
+
+.add-button {
+    margin-right: 3%;
+    margin-left: auto;
+    margin-bottom: 1%;
+}
+
+.button-edit,
+.button-delete {
+  display: inline-flex; /* Włączanie flexbox */
+  align-items: center; /* Wyrównanie w pionie (wysrodkowanie ikony) */
+  padding: 8px; /* Dostosuj pola wokół ikony */
+}
+
+/* Styl dla ikony Mat */
+.mat-icon {
+  font-size: 25px; /* Rozmiar ikony */
+ /* Dodatkowy margines z prawej strony ikony (opcjonalnie) */
+}
+
+/* Dodatkowe stylowanie przycisków Mat */
+.mat-raised-button {
+  min-width: 0; /* Minimalna szerokość przycisku */
+}
+
+.button-notify {
+   color: gold; /* Kolor ikony (żółty) */
+
+  padding: 8px; /* Dodatkowy odstęp wokół ikony (opcjonalnie) */ /* Możesz użyć dowolnego koloru, np. yellow */
+  }

@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import '_colors';
+
+$success-color: #0afd32f3;
+$error-color: #eb0808;
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.success-snackbar,
+.error-snackbar {
+    background: #292929 !important;
+    color: whitesmoke !important;
+    position: relative;
+    overflow: hidden;
+}
+
+

@@ -1,0 +1,36 @@
+<div class="example-container">
+  <mat-toolbar color="primary" style="width: 100%;">
+
+    <div class="toolbar-left">
+      <div class="left-content">
+        <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+        <span>Panel</span> 
+      </div>
+    </div>
+
+    <div class="toolbar-right">
+      <div class="left-content">
+        <span class="button-text">Logged: {{userDetails.email}}</span>
+        <button mat-button (click)="logOut()">Log Out</button>
+      </div>
+    </div>
+      
+    </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav [mode]="sidenavMode" [opened]="isSidenavOpen" fixedTopGap="56">>
+      <mat-nav-list>
+        <button mat-button (click)="sidenav.toggle()">Schowaj menu</button>
+        <app-company-list />
+      </mat-nav-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+     
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+
+
+
