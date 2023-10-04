@@ -31,7 +31,6 @@ export class AuthComponent {
     
 
   // TODO: poczytaj o long polling vs websockets
-  // redirect do dashboarda
   }
 
   register() {

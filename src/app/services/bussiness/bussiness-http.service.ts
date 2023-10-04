@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, retry } from 'rxjs';
+import { Observable, map, retry } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
 import { AuthBodyRequest } from 'src/app/interfaces/auth.interface';
 import { CompaniesData, Company, CompanyData } from 'src/app/interfaces/company.interface';
-import { UserDetails } from 'src/app/interfaces/user.inteface';
+import { OrginalUserDetails, UserDetails } from 'src/app/interfaces/user.inteface';
 import { CompanyWorkers, Worker, WorkerBody } from 'src/app/interfaces/worker.interface';
 
 @Injectable({
@@ -23,31 +23,62 @@ export class BussinessHttpService {
     return this.http.post(`${this._apiUrl}/auth/signIn`, data)
   }
 
-  getUserData(): Observable<any> {
-    return this.http.get(`${this._apiUrl}/auth/user`)
+  getUserData(): Observable<UserDetails> {
+    return this.http.get<OrginalUserDetails>(`${this._apiUrl}/auth/user`).pipe(
+      map(value=>({
+        id: value._id,
+        email: value.email
+      }))
+    )
   }
 
-  getCompanies(): Observable<CompaniesData> {
-    return this.http.get(`${this._apiUrl}/companies`) as Observable<CompaniesData>
+  getCompanies(): Observable<Company[]> {
+    return this.http.get<CompaniesData>(`${this._apiUrl}/companies`).pipe(
+      map((val)=>val.data),
+      map(value=>
+        value.map((value)=> ({
+          id: value._id,
+          name: value.name
+        }))
+      )
+    )
   }
 
-  getCompany(id: string): Observable<CompanyData> {
-    return this.http.get(`${this._apiUrl}/companies/${id}`) as Observable<CompanyData>
+  getCompany(id: string): Observable<Company> {
+    return this.http.get<CompanyData>(`${this._apiUrl}/companies/${id}`).pipe(
+      map(val=>val.data),
+      map(value=>({
+          id: value._id,
+          name: value.name
+        })
+      )
+    ) 
   }
 
-  getWorkersFromCompany(id: string): Observable<any> {
-    return this.http.get(`${this._apiUrl}/companies/${id}/workers`) 
+  getWorkersFromCompany(id: string): Observable<Worker[]> {
+    return this.http.get<CompanyWorkers>(`${this._apiUrl}/companies/${id}/workers`).pipe(
+      map(data=>data.data),
+      map(value=>
+        value.map((value)=> ({
+          id: value._id,
+          name: value.name,
+          surname: value.surname,
+          companyId: value.companyId,
+          university: value.university
+        }))
+      )
+    )   
   }
 
-  updateWorker({_id, ...body}: Worker): Observable<any> {
-    return this.http.put(`${this._apiUrl}/workers/${_id}`,body);
+  updateWorker({id, ...body}: Worker): Observable<any> {
+    return this.http.put(`${this._apiUrl}/workers/${id}`,body);
   }
 
   deleteWorker(id: string): Observable<any> {
     return this.http.delete(`${this._apiUrl}/workers/${id}`);
   }
 
-  addWorker({_id, ...body}: Worker): Observable<any> {
+  addWorker({id, ...body}: Worker): Observable<any> {
     return this.http.post(`${this._apiUrl}/workers`, body)
   }
 

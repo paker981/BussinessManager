@@ -1,16 +1,20 @@
 export interface CompanyData {
     message: string,
-    data: Company
+    data: OrginalCompany
 }
 
 export interface CompaniesData {
     message: string,
-    data: Company[]
+    data: OrginalCompany[]
 }
 
 
-export interface Company {
+export interface OrginalCompany {
     _id: string,
     name: string
 }
 
+export interface Company {
+    id: string,
+    name: string
+}

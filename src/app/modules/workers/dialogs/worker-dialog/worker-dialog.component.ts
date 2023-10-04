@@ -13,19 +13,16 @@ import { UniversityHttpService } from 'src/app/services/university/university-ht
   templateUrl: './worker-dialog.component.html',
   styleUrls: ['./worker-dialog.component.scss']
 })
-export class WorkerDialogComponent implements OnInit{
+export class WorkerDialogComponent {
 
-  form: FormGroup<WorkerForm>;
+  form!: FormGroup<WorkerForm>;
   formFilter: FormControl<string> = new FormControl('') as FormControl<string>;
 
   universities$: Observable<University[]> = 
     this.universityHttpService.getUniversities().pipe(
       tap((val)=>this.universities = val),
     );
-  companies$: Observable<Company[]> = 
-    this.bussinessHttpService.getCompanies().pipe(
-      map((val)=>val.data) // val.data do zmapowania gdzieś wyżej
-    );    
+  companies$: Observable<Company[]> = this.bussinessHttpService.getCompanies();   
 
   universities: University[] = []
   isEdit: boolean = false;     
@@ -35,35 +32,17 @@ export class WorkerDialogComponent implements OnInit{
     private universityHttpService: UniversityHttpService,
     private bussinessHttpService: BussinessHttpService,
     @Inject(MAT_DIALOG_DATA) protected data: Worker,
-    ) {
-    // @Inject() host etc.
+    ) { 
+      this.isEdit = this.data ? true : false;
 
       this.form = new FormGroup<WorkerForm>({
-        _id: new FormControl('') as FormControl<string>,
-        name: new FormControl('', Validators.required) as FormControl<string>,
-        surname: new FormControl('', Validators.required) as FormControl<string>,
-        companyId: new FormControl('', Validators.required) as FormControl<string>,
-        university: new FormControl('') as FormControl<string>
+        id: new FormControl(this.data ? this.data.id : '') as FormControl<string>,
+        name: new FormControl(this.data ? this.data.name : '', Validators.required) as FormControl<string>,
+        surname: new FormControl(this.data ? this.data.surname : '', Validators.required) as FormControl<string>,
+        companyId: new FormControl(this.data ? this.data.companyId : '', Validators.required) as FormControl<string>,
+        university: new FormControl(this.data ? this.data.university : '') as FormControl<string>
       })
     }
-  ngOnInit(): void {
-    // this.form = new FormGroup<WorkerForm>({
-    //   _id: new FormControl(this.data ? this.data._id : '') as FormControl<string>,
-    //   name: new FormControl('', Validators.required) as FormControl<string>,
-    //   surname: new FormControl('', Validators.required) as FormControl<string>,
-    //   companyId: new FormControl('', Validators.required) as FormControl<string>,
-    //   university: new FormControl('') as FormControl<string>
-    // })
-    if(this.data){
-      this.form.controls._id.setValue(this.data._id)
-      this.form.controls.name.setValue(this.data.name)
-      this.form.controls.surname.setValue(this.data.surname)
-      this.form.controls.university.setValue(this.data.university)
-      this.form.controls.companyId.setValue(this.data.companyId)
-      this.isEdit = true;
-    }
-
-  }
 
   submitForm(): void {
     // guard
@@ -72,14 +51,10 @@ export class WorkerDialogComponent implements OnInit{
       return;
     }
 
-    console.log(this.form.value);
     this.dialogRef.close(this.form.value);
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
-
-
-
 }

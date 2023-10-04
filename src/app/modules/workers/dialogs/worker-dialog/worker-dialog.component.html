@@ -22,7 +22,7 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-select [formControl]="form.controls.companyId" placeholder="Company" #singleSelect>
-                        <mat-option *ngFor="let company of companies$ | async" [value]="company._id">
+                        <mat-option *ngFor="let company of companies$ | async" [value]="company.id">
                             {{company.name}}
                         </mat-option>
                     </mat-select>

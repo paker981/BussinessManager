@@ -10,18 +10,11 @@ export const authGuard: CanMatchFn = (route, segments) => {
   const snackBar = inject(MatSnackBar);
   const router = inject(Router);
 
-  const resolve = bussinessHttpService.getUserData().pipe(
-    map((data) => {
-      if(!data.message) {
-        return true;
-      }
-      return false;
-    }),
+  return bussinessHttpService.getUserData().pipe(
+    map(()=>true),
     catchError(()=>{
       CustomSnackBarComponent.openErrorSnackBar(snackBar,'No permission, signUp first!', 'Close');
       return of(router.createUrlTree(['/auth']));
     })
   )
-
-  return resolve;
 };

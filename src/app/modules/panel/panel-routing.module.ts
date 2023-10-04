@@ -5,7 +5,6 @@ import { panelDataResolver } from "../resolvers/panel-data.resolver";
 import { CompanyViewComponent } from "../company/components/company-view/company-view.component";
 import { companyResolver } from "../company/resolvers/company.resolver";
 import { WorkersListComponent } from "../workers/components/workers-list/workers-list.component";
-import { workersListResolver } from "../workers/resolvers/workers-list.resolver";
 
 
 const routes: Routes = [
@@ -22,7 +21,6 @@ const routes: Routes = [
                    {
                      path: 'workers',
                      component: WorkersListComponent,
-                     resolve: {workers: workersListResolver}
                    }
                 ]
             },

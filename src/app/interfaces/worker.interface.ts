@@ -1,6 +1,14 @@
 import { FormControl } from "@angular/forms";
 
 export interface Worker {
+    id: string,
+    name: string,
+    surname: string,
+    companyId: string,
+    university: string
+}
+
+export interface OrginalWorker {
     _id: string,
     name: string,
     surname: string,
@@ -17,11 +25,11 @@ export interface WorkerBody {
 
 export interface CompanyWorkers {
     message: string,
-    data: Worker[]
+    data: OrginalWorker[]
 }
 
 export type WorkerForm = {
-    _id: FormControl<string>;
+    id: FormControl<string>;
     name: FormControl<string>;
     surname: FormControl<string>;
     university: FormControl<string>;

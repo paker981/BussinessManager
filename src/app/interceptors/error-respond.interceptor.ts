@@ -24,17 +24,8 @@ export class ErrorRespondInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = this.ERROR_MESSAGE;
 
-        if (error.status === 401) {
-          this.authService.logOut();
-        }
-        
-        if (error.error && error.error.message) {
-          errorMessage = error.error.message;
-        }
-
-        this.openErrorSnackBar(errorMessage);
+        this.statusRespondHandler(error);
         
         return throwError(() => {
           return error;
@@ -42,10 +33,26 @@ export class ErrorRespondInterceptor implements HttpInterceptor {
       })
     )
   }
+
+  private statusRespondHandler (error: HttpErrorResponse){
+
+    if(error.status){
+      if (error.status === 401) {
+        this.authService.logOut();
+      }
+
+      this.messageRespondHandler(error.error);
+    }
+  }
+  
+  private messageRespondHandler (error: {}) {
+    if('message' in error && typeof error.message === 'string'){
+      const message = error.message || this.ERROR_MESSAGE;
+       this.openErrorSnackBar(message);
+    }
+  }
   
   private openErrorSnackBar(message: string = this.ERROR_MESSAGE): void {
     CustomSnackBarComponent.openErrorSnackBar(this.snackBar, message, 'Close');
   }
 }
-
-//commit

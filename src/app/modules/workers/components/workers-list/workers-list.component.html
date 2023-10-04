@@ -1,17 +1,18 @@
-<!-- <ng-container *ngIf="workers$ | async"> -->
-<ng-container>
+ <ng-container *ngIf="workers$ | async"> 
+<!-- <ng-container> -->
     <mat-card mat-card>
         <mat-card-header class="mat-elevation-z8">
             <div class="add-button">
-                <button  (click)="add()" mat-raised-button color="primary">Add worker (+)</button>
+                <button appAdd (workerAdded)="onAdd()" mat-raised-button color="primary">Add worker (+)</button>
             </div>
         </mat-card-header>
         <br>
     <mat-card-content>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
             <ng-container matColumnDef="ID">
             <th mat-header-cell *matHeaderCellDef> ID. </th>
-            <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="name">
@@ -37,12 +38,18 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action</th>
                 <td mat-cell *matCellDef="let element">
-                    <button class="button-edit" (click)="edit(element)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
-                    <button class="button-delete" (click)="delete(element._id)" mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
-                    <button class="button-notify" mat-icon-button color="accent" (click)="notifyWorker(element)"><mat-icon>notifications_active</mat-icon></button>
-       
+                    <button class="button-edit" appEdit [data]="element" (workerEdited)="onEdit($event)" mat-icon-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button class="button-delete" appDelete [data]="element.id" (workerDeleted)="onDelete()" mat-icon-button color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button class="button-notify" appNotifyWorker [data]="element" mat-icon-button color="accent">
+                        <mat-icon>notifications_active</mat-icon>
+                    </button>
                 </td>
             </ng-container>
+   
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

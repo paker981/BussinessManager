@@ -1,7 +1,7 @@
 <p>company-view works!</p>
 
 <ng-container *ngIf="company$ | async as company">
-    <h3><b>Id: {{company?._id}}</b></h3>
+    <h3><b>Id: {{company?.id}}</b></h3>
     <h3><b>Name: {{company?.name}} </b></h3>
     <button mat-raised-button color="primary" routerLink="workers" (click)="listShow()">
         {{listShowed ? 'Hide' : 'Show'}} employees list!

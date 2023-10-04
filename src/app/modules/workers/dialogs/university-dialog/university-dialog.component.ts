@@ -29,10 +29,10 @@ export class UniversityDialogComponent {
   submitForm(): void {
     // guard
     if(this.form.invalid){
+      this.form.markAllAsTouched();
       return;
     }
-
-    console.log(this.form.value);
+    
     this.dialogRef.close(this.form.value);
   }
 

@@ -5,14 +5,12 @@ import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.
 
 @Component({
   selector: 'app-company-list',
-  template: `<a mat-list-item [routerLink]="['company', company._id]" *ngFor="let company of companies$ | async">{{company.name}}</a>`,
+  template: `<a mat-list-item [routerLink]="['company', company.id]" *ngFor="let company of companies$ | async">{{company.name}}</a>`,
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent {
 
-  companies$: Observable<Company[]> = this.bussinessHttpService.getCompanies().pipe(
-    map((val)=>val.data)
-  );
+  companies$: Observable<Company[]> = this.bussinessHttpService.getCompanies();
 
   constructor(private bussinessHttpService: BussinessHttpService) {}
 }

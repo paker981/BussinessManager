@@ -8,7 +8,7 @@ import { UserDetails } from 'src/app/interfaces/user.inteface';
 import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
 
 
-export const panelDataResolver: ResolveFn<boolean> = (route, state) => {
+export const panelDataResolver: ResolveFn<any> = (route, state) => {
 
   const bussinessHttpService = inject(BussinessHttpService);
   

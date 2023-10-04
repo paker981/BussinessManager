@@ -16,18 +16,14 @@ import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.
 export class CompanyViewComponent implements OnInit {
 
   company$: Observable<Company>= this.route.data.pipe(
-    map((val)=>val['company'].data),
-    tap(()=>this.listShowed=false),
-    tap(()=>this.cd.markForCheck())
+    map((val)=>val['company']),
+    tap(()=> this.listShowed = false)
   )
 
   listShowed: boolean = false;
-  // workers$!: Observable<Worker[]>
-  
 
   constructor(
-    private route: ActivatedRoute,
-    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
     ) {}
 
   listShow(){

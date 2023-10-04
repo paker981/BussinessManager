@@ -29,15 +29,6 @@ export class AuthService {
     return this.bussinessApi.signUp({email: email, password: password})
   }
 
-  // isLoggedIn(){
-  //   const token = this.storageService.getData('authToken');
-  //   return token ? true : false;
-  // }
-
-  // getToken(){
-  //   return this.storageService.getData('authToken');
-  // }
-
   logOut() {
     this.storageService.clear();
     this.router.navigate(['/auth']);

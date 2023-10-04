@@ -6,7 +6,10 @@ import { WorkerDialogComponent } from './dialogs/worker-dialog/worker-dialog.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchPipe } from './pipes/search.pipe';
 import { UniversityDialogComponent } from './dialogs/university-dialog/university-dialog.component';
-
+import { EditDirective } from './directives/edit.directive';
+import { DeleteDirective } from './directives/delete.directive';
+import { AddDirective } from './directives/add.directive';
+import { NotifyWorkerDirective } from './directives/notify-worker.directive';
 
 
 @NgModule({
@@ -14,7 +17,11 @@ import { UniversityDialogComponent } from './dialogs/university-dialog/universit
     WorkersListComponent,
     WorkerDialogComponent,
     SearchPipe,
-    UniversityDialogComponent
+    UniversityDialogComponent,
+    EditDirective,
+    DeleteDirective,
+    AddDirective,
+    NotifyWorkerDirective
   ],
   imports: [
     CommonModule,
