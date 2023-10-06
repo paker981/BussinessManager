@@ -12,13 +12,12 @@ import { WorkerService } from '../services/worker.service';
 @Directive({
   selector: '[appNotifyWorker]'
 })
-export class NotifyWorkerDirective implements OnInit {
-  private _notifyWorker = new Subject<Worker>();
+export class NotifyWorkerDirective {
 
   @Input({required: true}) data!: Worker;
   
   @HostListener('click') onClick() {
-    this._notifyWorker.next(this.data);
+    this.notifyWorker(this.data);
   }
 
   constructor(
@@ -28,20 +27,10 @@ export class NotifyWorkerDirective implements OnInit {
     ) { }
 
 
-  ngOnInit(): void {
-    this._notifyWorker.pipe(
-      untilDestroyed(this),
-      // brakuje zakończenia suba
-      switchMap((data: Worker)=>
-        this.bussinessHttpService.notifyWorker(data.id).pipe(
-          catchError(()=>this.openNotifyDialog(data)),
-        )
-      )
-    ).subscribe()
-  }
-
   notifyWorker(data: Worker){
-    this._notifyWorker.next(data);
+    this.bussinessHttpService.notifyWorker(data.id).pipe(
+      catchError(()=>this.openNotifyDialog(data)),
+    ).subscribe()
   }
   
   private openNotifyDialog(data: Worker) {
@@ -57,7 +46,7 @@ export class NotifyWorkerDirective implements OnInit {
         tap((university) => (data.university = university)),
         concatMap(() => this.bussinessHttpService.updateWorker(data)),
         tap(() => this.workerService.updateWorkerList(data.companyId)),
-        tap(() => this._notifyWorker.next(data)),
+        tap(() => this.notifyWorker(data)),
         )
   }
 }

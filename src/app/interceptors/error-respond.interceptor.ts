@@ -36,19 +36,22 @@ export class ErrorRespondInterceptor implements HttpInterceptor {
 
   private statusRespondHandler (error: HttpErrorResponse){
 
-    if(error.status){
-      if (error.status === 401) {
-        this.authService.logOut();
-      }
-
-      this.messageRespondHandler(error.error);
+    if(!error.status){
+      return;
     }
+
+    if (error.status === 401) {
+      this.authService.logOut();
+    }
+
+    this.messageRespondHandler(error.error);
+    
   }
   
   private messageRespondHandler (error: {}) {
     if('message' in error && typeof error.message === 'string'){
       const message = error.message || this.ERROR_MESSAGE;
-       this.openErrorSnackBar(message);
+      this.openErrorSnackBar(message);
     }
   }
   
