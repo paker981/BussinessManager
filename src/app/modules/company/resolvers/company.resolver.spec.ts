@@ -1,17 +1,40 @@
 import { TestBed } from '@angular/core/testing';
-import { ResolveFn } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 
 import { companyResolver } from './company.resolver';
+import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
 
 describe('companyResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => companyResolver(...resolverParameters));
+
+  const bussinessHttpServiceMock = {
+    getCompany: jest.fn()
+  }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: BussinessHttpService,
+          useValue: bussinessHttpServiceMock
+        }
+      ]
+
+    }).compileComponents();
   });
 
-  it('should be created', () => {
-    expect(executeResolver).toBeTruthy();
+  it('should return company by id', () => {
+     // given
+     bussinessHttpServiceMock.getCompany.mockReturnValue({});
+
+     // when
+     const resolver = TestBed.runInInjectionContext(() => {
+         return companyResolver( 
+          { params: { id: '1' } } as unknown as ActivatedRouteSnapshot,
+          {} as RouterStateSnapshot);
+       });
+ 
+     // then
+     expect(resolver).toStrictEqual({});
+     expect(bussinessHttpServiceMock.getCompany).toHaveBeenCalled();
   });
 });
