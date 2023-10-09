@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { environment } from 'src/app/environment/environment';
+import { environment } from '../../environment/environment';
 import { StateService } from '../stateManagment/state.service';
 import { Country } from 'src/app/interfaces/country.interface';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';

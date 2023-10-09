@@ -3,9 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { CustomSnackBarComponent } from 'src/app/components/custom-snack-bar/custom-snack-bar.component';
-import { AbstractStorageService } from 'src/app/interfaces/storage.interface';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
-import { STORAGE_SERVICE } from 'src/app/tokens/storage.token';
+import { AbstractStorageService } from '../../../interfaces/storage.interface';
+import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
+import { STORAGE_SERVICE } from '../../../tokens/storage.token';
 
 @Injectable({
   providedIn: 'root'

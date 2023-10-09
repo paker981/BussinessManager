@@ -2,9 +2,9 @@ import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, concatMap, tap } from 'rxjs';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
+import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
 import { WorkerDialogComponent } from '../dialogs/worker-dialog/worker-dialog.component';
-import { Worker } from 'src/app/interfaces/worker.interface';
+import { Worker } from '../../../interfaces/worker.interface';
 
 @UntilDestroy()
 @Directive({
@@ -25,12 +25,11 @@ export class AddDirective {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(Boolean),
         untilDestroyed(this),
+        filter(Boolean),
         concatMap((data: Worker)=>this.bussinessHttpService.addWorker(data)),
         tap(() => this.workerAdded.emit())
       )
       .subscribe();
   }
-
 }

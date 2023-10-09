@@ -51,6 +51,7 @@ export class SuccessRespondInterceptor implements HttpInterceptor {
         this.bodyRespondHandler(event.body)
       }
     }
+
     return event;
   }
 

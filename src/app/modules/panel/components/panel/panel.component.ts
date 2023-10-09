@@ -5,11 +5,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, map, shareReplay, tap } from 'rxjs';
-import { CustomSnackBarComponent } from 'src/app/components/custom-snack-bar/custom-snack-bar.component';
-import { Country } from 'src/app/interfaces/country.interface';
-import { UserDetails } from 'src/app/interfaces/user.inteface';
-import { AuthService } from 'src/app/modules/Auth/services/auth.service';
-import { StateService } from 'src/app/services/stateManagment/state.service';
+import { CustomSnackBarComponent } from '../../../../components/custom-snack-bar/custom-snack-bar.component';
+import { Country } from '../../../../interfaces/country.interface';
+import { UserDetails } from '../../../../interfaces/user.inteface';
+import { AuthService } from '../../../../modules/Auth/services/auth.service';
+import { StateService } from '../../../../services/stateManagment/state.service';
 
 @UntilDestroy()
 @Component({
@@ -44,7 +44,7 @@ export class PanelComponent {
   }
 
   onChangeCountry(value: Country){
-    this.stateService.updateCoutryState(value);
+    this.stateService.updateCountryState(value);
     CustomSnackBarComponent.openSuccessSnackBar(this.snackBar, `Country switched to ${value}`, 'Close!');
   }
 

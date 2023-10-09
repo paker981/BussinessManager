@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, tap } from 'rxjs';
 import { University } from 'src/app/interfaces/university.interface';
-import { UniversityHttpService } from 'src/app/services/university/university-http.service';
+import { UniversityHttpService } from '../../../../services/university/university-http.service';
 
 @Component({
   selector: 'app-university-dialog',

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Directive, EventEmitter, HostListener, Injectable, I
 import { MatDialog } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, concatMap, tap, catchError, switchMap, Subject } from 'rxjs';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
+import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
 import { WorkerDialogComponent } from '../dialogs/worker-dialog/worker-dialog.component';
 import { Worker } from 'src/app/interfaces/worker.interface';
 import { UniversityDialogComponent } from '../dialogs/university-dialog/university-dialog.component';

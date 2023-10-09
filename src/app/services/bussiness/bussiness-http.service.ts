@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, retry } from 'rxjs';
-import { environment } from 'src/app/environment/environment';
+import { environment } from '../../environment/environment';
 import { AuthBodyRequest } from 'src/app/interfaces/auth.interface';
 import { CompaniesData, Company, CompanyData } from 'src/app/interfaces/company.interface';
 import { OrginalUserDetails, UserDetails } from 'src/app/interfaces/user.inteface';

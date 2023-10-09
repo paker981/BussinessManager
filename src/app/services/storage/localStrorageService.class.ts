@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
-import { AbstractStorageService } from "../interfaces/storage.interface";
-
-
+import { AbstractStorageService } from "../../interfaces/storage.interface";
 
 export class LocalStorageService implements AbstractStorageService {
-
 
     constructor(private readonly window: Window){}
 

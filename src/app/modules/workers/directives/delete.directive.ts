@@ -2,7 +2,7 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { MatDialog } from '@angular/material/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
+import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
 
 @Directive({
   selector: '[appDelete]'

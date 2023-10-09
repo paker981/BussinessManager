@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, concatMap, tap } from 'rxjs';
 import { WorkerDialogComponent } from '../dialogs/worker-dialog/worker-dialog.component';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
+import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
 import { Worker } from 'src/app/interfaces/worker.interface';
 import { NotifyWorkerDirective } from './notify-worker.directive';
 
@@ -19,7 +19,7 @@ export class EditDirective {
 
   constructor(
     private dialog: MatDialog,
-     private businessHttpService: BussinessHttpService
+    private businessHttpService: BussinessHttpService
      ) {}
 
   @HostListener('click') onClick() {
@@ -38,7 +38,5 @@ export class EditDirective {
         tap(()=>this.workerEdited.emit(this.data))
       )
       .subscribe();
-
-
   }
 }

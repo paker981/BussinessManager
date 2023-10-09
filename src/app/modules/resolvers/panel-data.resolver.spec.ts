@@ -1,17 +1,39 @@
 import { TestBed } from '@angular/core/testing';
-import { ResolveFn } from '@angular/router';
-
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { panelDataResolver } from './panel-data.resolver';
+import { BussinessHttpService } from '../../services/bussiness/bussiness-http.service';
 
 describe('panelDataResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => panelDataResolver(...resolverParameters));
+  const bussinessHttpServiceMock = {
+    getUserData: jest.fn()
+  }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: BussinessHttpService,
+          useValue: bussinessHttpServiceMock
+        }
+      ]
+
+    }).compileComponents();
   });
 
-  it('should be created', () => {
-    expect(executeResolver).toBeTruthy();
+  it('should return user data', () => {
+     // given
+     bussinessHttpServiceMock.getUserData.mockReturnValue({});
+
+     // when
+     const resolver = TestBed.runInInjectionContext(() => {
+         return panelDataResolver(
+          {} as ActivatedRouteSnapshot,
+          {} as RouterStateSnapshot
+          );
+       });
+ 
+     // then
+     expect(resolver).toStrictEqual({});
+     expect(bussinessHttpServiceMock.getUserData).toHaveBeenCalled();
   });
 });

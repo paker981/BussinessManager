@@ -7,12 +7,11 @@ import { University } from 'src/app/interfaces/university.interface';
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(items: University[], filter: string): any {
+  transform(items: University[], filter: string): University[] {
     if (!items || filter.length < 1) {
         return items;
     }
     
-    return items.filter(item => item.name.toLowerCase().indexOf(filter) > -1);
-}
-
+    return items.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
+  }
 }

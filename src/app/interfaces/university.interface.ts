@@ -1,7 +1,7 @@
 
 
 export interface University {
-    "state-province": string,
+    "state-province": string | null,
     name: string,
     domains: string[],
     web_pages: string[],

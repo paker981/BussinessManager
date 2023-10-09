@@ -4,9 +4,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, filter, map, tap } from 'rxjs';
 import { Company } from 'src/app/interfaces/company.interface';
 import { University } from 'src/app/interfaces/university.interface';
-import { Worker, WorkerForm } from 'src/app/interfaces/worker.interface';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
-import { UniversityHttpService } from 'src/app/services/university/university-http.service';
+import { Worker, WorkerForm } from '../../../../interfaces/worker.interface';
+import { BussinessHttpService } from '../../../../services/bussiness/bussiness-http.service';
+import { UniversityHttpService } from '../../../../services/university/university-http.service';
 
 @Component({
   selector: 'app-worker-dialog',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Company, CompanyData } from 'src/app/interfaces/company.interface';
-import { BussinessHttpService } from 'src/app/services/bussiness/bussiness-http.service';
+import { BussinessHttpService } from '../../../../services/bussiness/bussiness-http.service';
 
 @Component({
   selector: 'app-company-list',

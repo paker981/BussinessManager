@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDrawer, MatDrawerMode } from '@angular/material/sidenav';
 import { BehaviorSubject } from 'rxjs';
-import { Country } from 'src/app/interfaces/country.interface';
+import { Country } from '../../interfaces/country.interface';
 
 
 @Injectable({
@@ -21,7 +21,7 @@ export class StateService {
     this._sidenavStateSubject.next({ mode, isOpen });
   }
 
-  updateCoutryState(newData: Country): void {
+  updateCountryState(newData: Country): void {
     this._countryStateSubject.next(newData);
   }
 }
