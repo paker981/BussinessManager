@@ -43,6 +43,7 @@ describe('CustomSnackBarComponent', () => {
 
     fixture = TestBed.createComponent(CustomSnackBarComponent);
     component = fixture.componentInstance;
+    jest.clearAllMocks();
   });
 
   it('should create the component', () => {
@@ -50,12 +51,12 @@ describe('CustomSnackBarComponent', () => {
   });
 
   it('should dismiss the snackbar', () => {
-      // when 
-      component.closeSnackbar();
+    // when 
+    component.closeSnackbar();
 
-      // then
-      expect(dismissSpy).toHaveBeenCalled();
-    });
+    // then
+    expect(dismissSpy).toHaveBeenCalled();
+  });
 
   it('should open an error snackbar', () => {
     // when 

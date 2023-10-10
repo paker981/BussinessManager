@@ -6,12 +6,15 @@ import { WorkerService } from '../../services/worker.service';
 import { of } from 'rxjs';
 import { NotifyWorkerDirective } from '../../directives/notify-worker.directive';
 import { Worker } from 'src/app/interfaces/worker.interface';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('WorkersListComponent', () => {
 
+  const workersMock = [{ id: '1', name: 'example', surname: 'mock', companyId: '1', university: '1' }];
+
   const workerServiceMock = {
     updateWorkerList: jest.fn(),
-    workers$: of([])
+    workers$: of(workersMock)
   }
 
   const notifyWorkerDirectiveMock = {
@@ -30,19 +33,26 @@ describe('WorkersListComponent', () => {
           provide: WorkerService,
           useValue: workerServiceMock
         }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
+
     fixture = TestBed.createComponent(WorkersListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should load workers on component initialization', () => {
+    expect(component.dataSource.data).toBe(workersMock); 
+  });
+
   it('should call updateWorkerList in ngAfterViewInit', () => {
-    //given
+    // Arrange
     workerServiceMock.updateWorkerList.mockReturnValue([]);
 
     // Act/when
@@ -55,8 +65,6 @@ describe('WorkersListComponent', () => {
   it('should call notifyWorker and updateWorkerList in onEdit', () => {
     // Arrange
     const testWorker: Worker = { id: '1', name: 'example', surname: 'mock', companyId: '1', university: '1' };
-    // @ts-ignore
-    const updateWorkerListSpy = jest.spyOn(component, 'updateWorkerList');
     component.notifyWorkerDirective = notifyWorkerDirectiveMock as unknown as NotifyWorkerDirective;
 
     // Act
@@ -64,31 +72,23 @@ describe('WorkersListComponent', () => {
 
     // Assert
     expect(notifyWorkerDirectiveMock.notifyWorker).toHaveBeenCalledWith(testWorker);
-    expect(updateWorkerListSpy).toHaveBeenCalled();
+    expect(workerServiceMock.updateWorkerList).toHaveBeenCalled();
   });
 
   it('should call updateWorkerList in onAdd', () => {
-    // given
-    // @ts-ignore
-    const updateWorkerListSpy = jest.spyOn(component, 'updateWorkerList');
-
     // Act
     component.onAdd();
 
     // Assert
-    expect(updateWorkerListSpy).toHaveBeenCalled();
+    expect(workerServiceMock.updateWorkerList).toHaveBeenCalled();
   });
 
   it('should call updateWorkerList in onDelete', () => {
-    // given
-    // @ts-ignore
-    const updateWorkerListSpy = jest.spyOn(component, 'updateWorkerList');
-
     // Act
     component.onDelete();
 
     // Assert
-    expect(updateWorkerListSpy).toHaveBeenCalled();
+    expect(workerServiceMock.updateWorkerList).toHaveBeenCalled();
   });
 
   it('should set dataSource in setTableValue', () => {

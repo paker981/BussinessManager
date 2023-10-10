@@ -53,6 +53,7 @@ describe('PanelComponent', () => {
     fixture = TestBed.createComponent(PanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {
@@ -69,7 +70,9 @@ describe('PanelComponent', () => {
   });
 
   it('should call setSideState on service when sidenav state update', () => {
+    // given
     component.sidenav = { opened: false } as MatSidenav;
+    
     // when
     component.onUpdateSidenavState();
 

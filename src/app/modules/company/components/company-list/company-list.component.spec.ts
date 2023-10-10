@@ -22,9 +22,11 @@ describe('CompanyListComponent', () => {
         }
       ]
     });
+    
     fixture = TestBed.createComponent(CompanyListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {

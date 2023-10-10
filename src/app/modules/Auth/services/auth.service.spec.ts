@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AuthService } from './auth.service';
 import { STORAGE_SERVICE } from '../../../tokens/storage.token';
 import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
@@ -26,6 +25,7 @@ describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        AuthService,
         {
           provide: STORAGE_SERVICE,
           useValue: storageServiceMock
@@ -41,6 +41,7 @@ describe('AuthService', () => {
       ]
     });
     service = TestBed.inject(AuthService);
+    jest.clearAllMocks();
   });
 
   it('should be created', () => {
@@ -82,5 +83,4 @@ describe('AuthService', () => {
     expect(storageServiceMock.clear).toHaveBeenCalled();
     expect(router.navigate).toBeCalledWith(['/auth']);
   });
-
 });

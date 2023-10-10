@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { WorkerDialogComponent } from './worker-dialog.component';
 import { UniversityHttpService } from 'src/app/services/university/university-http.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -44,12 +43,13 @@ describe('WorkerDialogComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: null },
       ]
     });
+    
     universityHttpServiceMock.getUniversities.mockReturnValue(of(universityMock));
     bussinessHttpServiceMock.getCompanies.mockReturnValue(of([]));
     fixture = TestBed.createComponent(WorkerDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    dialogRefMock.close.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {

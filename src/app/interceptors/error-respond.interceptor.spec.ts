@@ -22,30 +22,33 @@ describe('ErrorRespondInterceptor', () => {
   let controller: HttpTestingController
 
   beforeEach(() => {
-  
-  TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-    providers: [
-      ErrorRespondInterceptor,
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: ErrorRespondInterceptor,
-          multi: true
-        },
-        {
-          provide: MatSnackBar,
-          useValue: snackBarMock
-        },
-        {
-          provide: AuthService,
-          useValue: authServiceMock
-        }   
-      ]
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        ErrorRespondInterceptor,
+          {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorRespondInterceptor,
+            multi: true
+          },
+          {
+            provide: MatSnackBar,
+            useValue: snackBarMock
+          },
+          {
+            provide: AuthService,
+            useValue: authServiceMock
+          }   
+        ]
     });
-      client = TestBed.inject(HttpClient);;
-      controller = TestBed.inject(HttpTestingController);
+    client = TestBed.inject(HttpClient);;
+    controller = TestBed.inject(HttpTestingController);
+    jest.clearAllMocks();
   });
 
+  afterEach(()=>{
+    controller.verify();
+  })
 
 
   it('should handle HTTP errors and log out on 401 status', fakeAsync(() => {
@@ -62,7 +65,6 @@ describe('ErrorRespondInterceptor', () => {
 
     const req = controller.expectOne(url);
     req.flush({ message: errorMessage }, { status: 401, statusText: 'Unauthorized' });
-    tick(1);
 
     // then
     expect(errorSpy).toHaveBeenCalledWith(401)

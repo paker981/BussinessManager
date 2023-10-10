@@ -8,23 +8,24 @@ import { By } from '@angular/platform-browser';
 import { WorkerDialogComponent } from '../dialogs/worker-dialog/worker-dialog.component';
 import { Worker } from 'src/app/interfaces/worker.interface';
 
-describe('AddDirective', () => {
-  @Component({
-    template: '<button appEdit [data]="worker" (workerEdited)="onWorkerEdited()">Edit Worker</button>',
-  })
-  class ParentComponentMock {
-    worker = workerMock;
-    onWorkerEdited(): void {}
-  }
-  
-  const workerMock: Worker = {
-    id: '1',
-    name: 'John',
-    surname: 'Doe',
-    companyId: '1',
-    university: 'University 1',
-  }
+@Component({
+  template: '<button appEdit [data]="worker" (workerEdited)="onWorkerEdited()">Edit Worker</button>',
+})
+class ParentComponentMock {
+  worker = workerMock;
+  onWorkerEdited(): void {}
+}
 
+const workerMock: Worker = {
+  id: '1',
+  name: 'John',
+  surname: 'Doe',
+  companyId: '1',
+  university: 'University 1',
+}
+
+describe('AddDirective', () => {
+  
   const dialogMock = {
     open: jest.fn()
   };
@@ -46,15 +47,11 @@ describe('AddDirective', () => {
       ],
     });
 
-    dialogMock.open.mockReturnValue({
-      afterClosed: () => of(true),
-     })
-    bussinessHttpServiceMock.updateWorker.mockReturnValue(of({}))
-
     fixture = TestBed.createComponent(ParentComponentMock);
     hostComponent = fixture.componentInstance;
     directiveElement = fixture.debugElement.query(By.directive(EditDirective));
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {
@@ -62,25 +59,22 @@ describe('AddDirective', () => {
   });
 
   it('should open WorkerDialogComponent with data when button is clicked', () => {
+    // Arrange
+    const onWorkerEditedSpy = jest.spyOn(hostComponent, 'onWorkerEdited');
+    dialogMock.open.mockReturnValue({
+      afterClosed: () => of(true),
+     })
+    bussinessHttpServiceMock.updateWorker.mockReturnValue(of({}))
+
     // Act
     directiveElement.triggerEventHandler('click', null);
-
+    
     // Assert
     expect(dialogMock.open).toHaveBeenCalledWith(WorkerDialogComponent, {
       width: '400px',
       height: '500px',
       data: workerMock
     });
-  });
-
-  it('should call BussinessHttpService.updateWorker and emit workerEdited event when worker is edited', () => {
-    // given
-    const onWorkerEditedSpy = jest.spyOn(hostComponent, 'onWorkerEdited');
-
-    // Act
-    directiveElement.triggerEventHandler('click', null);
-
-    // Assert
     expect(bussinessHttpServiceMock.updateWorker).toHaveBeenCalled();
     expect(onWorkerEditedSpy).toHaveBeenCalled();
   });

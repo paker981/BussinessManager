@@ -8,7 +8,11 @@ describe('StateService', () => {
   let stateService: StateService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers:[
+        StateService
+      ]
+    });
     stateService = TestBed.inject(StateService);
   });
 

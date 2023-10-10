@@ -5,36 +5,52 @@ import { ControlContainer, FormControl, FormGroup, FormGroupDirective, ReactiveF
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MaterialModule } from '../../material/material.module';
-import { Component, Directive, Input } from '@angular/core';
+import { Component, Directive, Input, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+@Component({
+  template: `<form [formGroup]="form">
+              <app-login-group controlKey="testKey"/>
+            </form>
+            `
+})
+class ParentComponentMock {
+  @ViewChild(LoginGroupComponent) loginGroupComponent!: LoginGroupComponent; 
+  form: FormGroup = new FormGroup({});
+}
 
 describe('LoginGroupComponent', () => {
+  //second option with provide controlcontainer
+  //const parentFormMock = new FormGroup({});
+  //const formGroupDirectiveMock: FormGroupDirective = new FormGroupDirective([], []);
+  //formGroupDirectiveMock.form = parentFormMock;
 
-  const parentFormMock = new FormGroup({});
-  const formGroupDirectiveMock: FormGroupDirective = new FormGroupDirective([], []);
-  formGroupDirectiveMock.form = parentFormMock;
+  let component: ParentComponentMock;
+  let fixture: ComponentFixture<ParentComponentMock>;
 
-  let component: LoginGroupComponent;
-  let fixture: ComponentFixture<LoginGroupComponent>;
-
-  beforeEach(async() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ ],
-      imports: [ReactiveFormsModule, MaterialModule,
-      LoginGroupComponent, NoopAnimationsModule],
-      providers: [
-        { 
-          provide: ControlContainer,
-          useValue: formGroupDirectiveMock
-        },
+      declarations: [ParentComponentMock],
+      imports: [
+        ReactiveFormsModule, 
+        LoginGroupComponent, 
+        NoopAnimationsModule
       ],
+      providers: [
+        // { 
+        //   provide: ControlContainer,
+        //   useValue: formGroupDirectiveMock
+        // },
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoginGroupComponent);
+    //fixture = TestBed.createComponent(LoginGroupComponent);
+    //component.controlKey = 'testKey';
+    fixture = TestBed.createComponent(ParentComponentMock);
     component = fixture.componentInstance;
-    component.controlKey = 'testKey';
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {
@@ -42,15 +58,13 @@ describe('LoginGroupComponent', () => {
   });
 
   it('should add form controls to parent form group on initialization', () => {
-    console.log(component.parentFormGroup);
-
-    expect(component.parentFormGroup.get('testKey')).toBeInstanceOf(FormGroup);
-    expect(component.parentFormGroup.get('testKey')?.get('email')).toBeInstanceOf(FormControl);
-    expect(component.parentFormGroup.get('testKey')?.get('password')).toBeInstanceOf(FormControl);
+    expect(component.form.get('testKey')).toBeInstanceOf(FormGroup);
+    expect(component.form.get('testKey')?.get('email')).toBeInstanceOf(FormControl);
+    expect(component.form.get('testKey')?.get('password')).toBeInstanceOf(FormControl);
   });
 
   it('should remove form controls from parent form group on destruction', () => {
-    component.ngOnDestroy();
-    expect(component.parentFormGroup.get('testKey')).toBeNull();
+    component.loginGroupComponent.ngOnDestroy();
+    expect(component.form.get('testKey')).toBeNull();
   });
 });

@@ -18,6 +18,7 @@ describe('panelDataResolver', () => {
       ]
 
     }).compileComponents();
+    jest.clearAllMocks();
   });
 
   it('should return user data', () => {

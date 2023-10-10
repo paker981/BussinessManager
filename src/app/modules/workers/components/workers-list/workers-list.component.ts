@@ -17,7 +17,8 @@ import { WorkerService } from '../../services/worker.service';
 @Component({
   selector: 'app-workers-list',
   templateUrl: './workers-list.component.html',
-  styleUrls: ['./workers-list.component.scss']
+  styleUrls: ['./workers-list.component.scss'],
+  // provide
 })
 export class WorkersListComponent implements AfterViewInit {
 

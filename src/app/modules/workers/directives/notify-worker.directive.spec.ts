@@ -39,13 +39,6 @@ describe('NotifyWorkerDirective', () => {
     const workerServiceMock = {
         updateWorkerList: jest.fn()
     }
-
-    const clearMockUps = () => {
-        bussinessHttpServiceMock.updateWorker.mockClear();
-        bussinessHttpServiceMock.notifyWorker.mockClear();
-        workerServiceMock.updateWorkerList.mockClear();
-        dialogMock.open.mockClear();
-    }
     
     let fixture: ComponentFixture<ParentComponentMock>;
     let hostComponent: ParentComponentMock;
@@ -61,49 +54,72 @@ describe('NotifyWorkerDirective', () => {
         ],
       });
   
-      dialogMock.open.mockReturnValue({
-        afterClosed: () => of(true),
-       })
-      workerServiceMock.updateWorkerList.mockReturnValue(of({}));
-      bussinessHttpServiceMock.updateWorker.mockReturnValue(of({}));
-  
       fixture = TestBed.createComponent(ParentComponentMock);
       hostComponent = fixture.componentInstance;
       directiveElement = fixture.debugElement.query(By.directive(NotifyWorkerDirective));
       fixture.detectChanges();
-      clearMockUps();
+      jest.clearAllMocks();
     });
   
     it('should create', () => {
       expect(directiveElement).toBeTruthy();
     });
   
-    it('should call notifyWorker when button is clicked and notifyWorker throws error', () => {
-        //given 
-        bussinessHttpServiceMock.notifyWorker.mockReturnValue(throwError(()=>of('Error')));
+    it('should call notifyWorker when button is clicked and notifyWorker throws error and dialog afterClose returns true', () => {
+      // Arrange
+      bussinessHttpServiceMock.notifyWorker.mockReturnValue(throwError(()=>of('Error')));
+      dialogMock.open.mockReturnValue({
+        afterClosed: () => of(true),
+        })
+      workerServiceMock.updateWorkerList.mockReturnValue(of({}));
+      bussinessHttpServiceMock.updateWorker.mockReturnValue(of({}));
 
-        // Act
-        directiveElement.triggerEventHandler('click', null);
+      // Act
+      directiveElement.triggerEventHandler('click', null);
 
-        // Assert
-        expect(bussinessHttpServiceMock.notifyWorker).toHaveBeenCalledWith(workerMock.id);
-        expect(dialogMock.open).toHaveBeenCalledWith(UniversityDialogComponent, {
-            width: '450px',
-            height: '300px',
-          });
-        expect(bussinessHttpServiceMock.updateWorker).toHaveBeenCalledWith(workerMock);
-        expect(workerServiceMock.updateWorkerList).toHaveBeenCalledWith(workerMock.companyId);
+      // Assert
+      expect(bussinessHttpServiceMock.notifyWorker).toHaveBeenCalledWith(workerMock.id);
+      expect(dialogMock.open).toHaveBeenCalledWith(UniversityDialogComponent, {
+          width: '450px',
+          height: '300px',
+        });
+      expect(bussinessHttpServiceMock.updateWorker).toHaveBeenCalledWith(workerMock);
+      expect(workerServiceMock.updateWorkerList).toHaveBeenCalledWith(workerMock.companyId);
+    });
+
+    it('should call notifyWorker when button is clicked and notifyWorker throws error and dialog afterClose returns false', () => {
+      // Arrange
+      bussinessHttpServiceMock.notifyWorker.mockReturnValue(throwError(()=>of('Error')));
+      dialogMock.open.mockReturnValue({
+        afterClosed: () => of(false),
+        })
+
+      // Act
+      directiveElement.triggerEventHandler('click', null);
+
+      // Assert
+      expect(bussinessHttpServiceMock.notifyWorker).toHaveBeenCalledWith(workerMock.id);
+      expect(dialogMock.open).toHaveBeenCalledWith(UniversityDialogComponent, {
+          width: '450px',
+          height: '300px',
+        });
+      expect(bussinessHttpServiceMock.updateWorker).not.toHaveBeenCalledWith(workerMock);
+      expect(workerServiceMock.updateWorkerList).not.toHaveBeenCalledWith(workerMock.companyId);
     });
 
     it('should call notifyWorker when button is clicked and notifyWorker returns succeed', () => {
-        //given 
-        bussinessHttpServiceMock.notifyWorker.mockReturnValue(of({}));
+      // Arrange
+      bussinessHttpServiceMock.notifyWorker.mockReturnValue(of({}));
 
-        // Act
-        directiveElement.triggerEventHandler('click', null);
+      // Act
+      directiveElement.triggerEventHandler('click', null);
 
-        // Assert
-        expect(bussinessHttpServiceMock.notifyWorker).toHaveBeenCalledWith(workerMock.id);
+      // Assert
+      expect(bussinessHttpServiceMock.notifyWorker).toHaveBeenCalledWith(workerMock.id);
+      expect(dialogMock.open).not.toHaveBeenCalledWith(UniversityDialogComponent, {
+        width: '450px',
+        height: '300px',
+      });
     });
   });
 

@@ -7,20 +7,17 @@ import { of } from 'rxjs/internal/observable/of';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('AuthComponent', () => {
-
-
-  class AuthComponentMock extends AuthComponent {
-    setFormValue(controlKey: string,value: {email: string, password: string}){
-      this.form.addControl(controlKey, 
-        new FormGroup({
-          email: new FormControl(value.email),
-          password: new FormControl(value.password)
-        }))
-    }
+class AuthComponentMock extends AuthComponent {
+  setFormValue(controlKey: string,value: {email: string, password: string}){
+    this.form.addControl(controlKey, 
+      new FormGroup({
+        email: new FormControl(value.email),
+        password: new FormControl(value.password)
+      }))
   }
+}
 
-
+describe('AuthComponent', () => {
   const authServiceMock = {
     login: jest.fn(),
     register: jest.fn()
@@ -50,11 +47,11 @@ describe('AuthComponent', () => {
         }
       ],
       schemas: [NO_ERRORS_SCHEMA]
-
     });
     fixture = TestBed.createComponent(AuthComponentMock);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   
@@ -79,9 +76,9 @@ describe('AuthComponent', () => {
   it('should register user', () => {
     //given
     const userMock = { email: 'example@example.com', password: '123' };
+    const changeStateSpy = jest.spyOn(component,'changeState');
     component.setFormValue("registerData",userMock);
     authServiceMock.register.mockReturnValue(of({}));
-    const changeStateSpy = jest.spyOn(component,'changeState');
 
     //when
     component.register();

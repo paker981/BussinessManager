@@ -23,27 +23,25 @@ describe('authGuard', () => {
   };
 
   beforeEach(() => {
-  TestBed.configureTestingModule({
-      declarations: [],
-      imports: [NoopAnimationsModule],
-      providers: [
-        {
-          provide: BussinessHttpService,
-          useValue: bussinessHttpServiceMock
-        },
-        {
-          provide: Router,
-          useValue: routerMock
-        },
-        {
-          provide: MatSnackBar,
-          useValue: snackBarMock
-        }],
-        schemas: [NO_ERRORS_SCHEMA]
+    TestBed.configureTestingModule({
+        declarations: [],
+        imports: [NoopAnimationsModule],// do wyjebania?
+        providers: [
+          {
+            provide: BussinessHttpService,
+            useValue: bussinessHttpServiceMock
+          },
+          {
+            provide: Router,
+            useValue: routerMock
+          },
+          {
+            provide: MatSnackBar,
+            useValue: snackBarMock
+          }],
+          schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
-
-    
-
+    jest.clearAllMocks();
   });
 
 it('should return true if getUserData succeeds', fakeAsync (() => {
@@ -55,8 +53,8 @@ it('should return true if getUserData succeeds', fakeAsync (() => {
   TestBed.runInInjectionContext(() => {
       (authGuard({}, []) as Observable<Object>).subscribe((result) => {
         resultSpy(result);
-      })
-    });
+    })
+  });
 
   // then
   expect(resultSpy).toHaveBeenCalledWith(true);

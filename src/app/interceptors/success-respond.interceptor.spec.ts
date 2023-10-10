@@ -33,6 +33,7 @@ describe('SuccessRespondInterceptor', () => {
     });
       client = TestBed.inject(HttpClient);;
       controller = TestBed.inject(HttpTestingController);
+      jest.clearAllMocks();
   });
 
 

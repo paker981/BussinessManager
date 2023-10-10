@@ -7,14 +7,14 @@ import { By } from '@angular/platform-browser';
 import { WorkerDialogComponent } from '../dialogs/worker-dialog/worker-dialog.component';
 import { of } from 'rxjs';
 
+@Component({
+  template: '<button appAdd (workerAdded)="onWorkerAdded()">Add Worker</button>',
+})
+class ParentComponentMock {
+  onWorkerAdded(): void {}
+}
+
 describe('AddDirective', () => {
-  @Component({
-    template: '<button appAdd (workerAdded)="onWorkerAdded()">Add Worker</button>',
-  })
-  class ParentComponentMock {
-    onWorkerAdded(): void {}
-  }
-  
   const dialogMock = {
     open: jest.fn()
   };
@@ -36,23 +36,24 @@ describe('AddDirective', () => {
       ],
     });
 
-    dialogMock.open.mockReturnValue({
-      afterClosed: () => of(true),
-     })
-    bussinessHttpServiceMock.addWorker.mockReturnValue(of({}))
-
     fixture = TestBed.createComponent(ParentComponentMock);
     hostComponent = fixture.componentInstance;
     directiveElement = fixture.debugElement.query(By.directive(AddDirective));
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {
     expect(directiveElement).toBeTruthy();
   });
 
-  it('should open WorkerDialogComponent when button is clicked', () => {
-
+  it('should open WorkerDialogComponent when button is clicked, BussinessHttpService.addWorker and emit workerAdded event when worker is added', () => { // zmiana logiki
+    // Arrange
+    dialogMock.open.mockReturnValue({
+      afterClosed: () => of(true),
+    });
+    bussinessHttpServiceMock.addWorker.mockReturnValue(of({}));
+    const onWorkerAddedSpy = jest.spyOn(hostComponent, 'onWorkerAdded');
 
     // Act
     directiveElement.triggerEventHandler('click', null);
@@ -62,16 +63,6 @@ describe('AddDirective', () => {
       width: '400px',
       height: '500px',
     });
-  });
-
-  it('should call BussinessHttpService.addWorker and emit workerAdded event when worker is added', () => {
-    // given
-    const onWorkerAddedSpy = jest.spyOn(hostComponent, 'onWorkerAdded');
-
-    // Act
-    directiveElement.triggerEventHandler('click', null);
-
-    // Assert
     expect(bussinessHttpServiceMock.addWorker).toHaveBeenCalled();
     expect(onWorkerAddedSpy).toHaveBeenCalled();
   });

@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CompanyViewComponent } from './company-view.component';
-import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -25,6 +23,7 @@ describe('CompanyViewComponent', () => {
     fixture = TestBed.createComponent(CompanyViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {

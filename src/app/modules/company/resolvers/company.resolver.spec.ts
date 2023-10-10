@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-
 import { companyResolver } from './company.resolver';
 import { BussinessHttpService } from '../../../services/bussiness/bussiness-http.service';
 
@@ -18,8 +17,8 @@ describe('companyResolver', () => {
           useValue: bussinessHttpServiceMock
         }
       ]
-
     }).compileComponents();
+    jest.clearAllMocks();
   });
 
   it('should return company by id', () => {

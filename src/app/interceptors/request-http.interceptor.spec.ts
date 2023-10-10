@@ -14,23 +14,24 @@ describe('RequestHttpInterceptor', () => {
     let controller: HttpTestingController
   
     beforeEach(() => {
-    
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-          {
-            provide: HTTP_INTERCEPTORS,
-            useClass: RequestHttpInterceptor,
-            multi: true
-          },
-          {
-            provide: STORAGE_SERVICE,
-            useValue: storageServiceMock
-          }
-        ]
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+        providers: [
+            {
+              provide: HTTP_INTERCEPTORS,
+              useClass: RequestHttpInterceptor,
+              multi: true
+            },
+            {
+              provide: STORAGE_SERVICE,
+              useValue: storageServiceMock
+            }
+          ]
       });
-        client = TestBed.inject(HttpClient);;
-        controller = TestBed.inject(HttpTestingController);
+
+      client = TestBed.inject(HttpClient);;
+      controller = TestBed.inject(HttpTestingController);
+      jest.clearAllMocks();
     });
   
   
@@ -57,7 +58,6 @@ describe('RequestHttpInterceptor', () => {
     it('should not add Authorization header with Bearer token if token is not available', fakeAsync(() => {
       // given
       const url = 'https://api.example.com/data';
-      const token = 'fakeToken';
       storageServiceMock.getData.mockReturnValue(null);
       const responseSpy = jest.fn();
   

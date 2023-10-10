@@ -16,6 +16,7 @@ describe('BussinessHttpService', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
+        BussinessHttpService
       ]
     });
 
@@ -40,9 +41,7 @@ describe('BussinessHttpService', () => {
     };
 
     // when
-    service.signUp(mockSignUpData).subscribe(response => {
-      resultSpy(response)
-    });
+    service.signUp(mockSignUpData).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/auth/signUp`);
     req.flush({message: '1'});
@@ -61,9 +60,7 @@ describe('BussinessHttpService', () => {
     };
 
     // when
-    service.signIn(mockSignUpData).subscribe(response => {
-      resultSpy(response)
-    });
+    service.signIn(mockSignUpData).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/auth/signIn`);
     req.flush({});
@@ -80,9 +77,7 @@ describe('BussinessHttpService', () => {
     const expectedUserData: UserDetails = { id: '1', email: 'example@example.com' };
 
     // when
-    service.getUserData().subscribe(data => {
-      resultSpy(data);
-    });
+    service.getUserData().subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/auth/user`);
     req.flush(mockUserData);
@@ -99,9 +94,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.getCompanies().subscribe(companies => {
-      resultSpy(companies);
-    });
+    service.getCompanies().subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/companies`);
     req.flush(mockCompaniesData);
@@ -119,9 +112,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.getCompany(companyId).subscribe(company => {
-      resultSpy(company)
-    });
+    service.getCompany(companyId).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/companies/${companyId}`);
     req.flush(mockCompanyData);
@@ -143,9 +134,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.getWorkersFromCompany(companyId).subscribe(workers => {
-      resultSpy(workers)
-    });
+    service.getWorkersFromCompany(companyId).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/companies/${companyId}/workers`);
     req.flush(mockWorkersData);
@@ -161,9 +150,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.updateWorker(mockWorker).subscribe(response => {
-      resultSpy(response);
-    });
+    service.updateWorker(mockWorker).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/workers/${mockWorker.id}`);
     req.flush({});
@@ -179,9 +166,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.deleteWorker(workerId).subscribe(response => {
-      resultSpy(response);
-    });
+    service.deleteWorker(workerId).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/workers/${workerId}`);
     req.flush({});
@@ -197,9 +182,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.addWorker(mockWorker).subscribe(response => {
-      resultSpy(response);
-    });
+    service.addWorker(mockWorker).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/workers`);
     req.flush({});
@@ -215,9 +198,7 @@ describe('BussinessHttpService', () => {
     const resultSpy = jest.fn();
 
     // when
-    service.notifyWorker(workerId).subscribe(response => {
-      resultSpy(response);
-    });
+    service.notifyWorker(workerId).subscribe(resultSpy);
 
     const req = httpTestingController.expectOne(`${environment.apiUrl}/workers/${workerId}/notify`);
     req.flush({});

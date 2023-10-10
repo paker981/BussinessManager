@@ -44,9 +44,7 @@ describe('WorkerService', () => {
 
 
     // when
-    workerService.workers$.subscribe((workers) => {
-      resultSpy(workers);
-    });
+    workerService.workers$.subscribe(resultSpy);
     workerService.updateWorkerList(companyId);
 
     // then 

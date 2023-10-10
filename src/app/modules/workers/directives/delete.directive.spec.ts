@@ -7,14 +7,15 @@ import { BussinessHttpService } from '../../../services/bussiness/bussiness-http
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
-describe('DeleteDirective', () => {
-  @Component({
-    template: '<button appDelete (workerDeleted)="onWorkerDeleted()">Delete Worker</button>',
-  })
-  class ParentComponentMock {
-    onWorkerDeleted(): void {}
-  }
+@Component({
+  template: '<button appDelete (workerDeleted)="onWorkerDeleted()">Delete Worker</button>',
+})
+class ParentComponentMock {
+  onWorkerDeleted(): void {}
+}
 
+describe('DeleteDirective', () => {
+ 
   const bussinessHttpServiceMock = {
     deleteWorker: jest.fn()
   };
@@ -30,11 +31,11 @@ describe('DeleteDirective', () => {
         { provide: BussinessHttpService, useValue: bussinessHttpServiceMock },
       ],
     });
-    bussinessHttpServiceMock.deleteWorker.mockReturnValue(of({}))
     fixture = TestBed.createComponent(ParentComponentMock);
     hostComponent = fixture.componentInstance;
     directiveElement = fixture.debugElement.query(By.directive(DeleteDirective));
     fixture.detectChanges();
+    jest.clearAllMocks();
   });
 
   it('should create', () => {
@@ -42,7 +43,8 @@ describe('DeleteDirective', () => {
   });
 
   it('should call BussinessHttpService.deleteWorker and emit workerDeleted event when worker is deleted', () => {
-    // given
+    // Arrange
+    bussinessHttpServiceMock.deleteWorker.mockReturnValue(of({}))
     const onWorkerDeletedSpy = jest.spyOn(hostComponent, 'onWorkerDeleted');
 
     // Act
